@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Créer un Projet</title>
+</head>
+<body>
+    <h1>Créer un Nouveau Projet</h1>
+    <form action="{% url 'create_project' %}" method="post" enctype="multipart/form-data">  <!-- Note l'attribut enctype -->
+        {% csrf_token %}
+        
+        <label for="title">Titre:</label><br>
+        <input type="text" id="title" name="title" required><br><br>
+
+        <label for="description">Description:</label><br>
+        <textarea id="description" name="description"></textarea><br><br>
+
+        <label for="image">Image:</label><br>
+        <input type="file" id="image" name="image"><br><br>
+
+        <label for="completed">Terminé:</label><br>
+        <input type="checkbox" id="completed" name="completed"><br><br>
+
+        <label for="due_date">Date d'échéance:</label><br>
+        <input type="date" id="due_date" name="due_date"><br><br>
+
+        <input type="submit" value="Créer le Projet">
+        <button type="button" onclick="window.location.href='{% url 'main_page' %}'">Retour</button>
+    </form>
+</body>
+</html>

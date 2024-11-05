@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des Projets</title>
+</head>
+<body>
+    <h1>Liste des Projets</h1>
+
+    <form method="GET" action="">
+        <label for="completed">Filtrer par terminé :</label>
+        <select name="completed" id="completed">
+            <option value="">Sans filtre</option>
+            <option value="True">Oui</option>
+            <option value="False">Non</option>
+        </select>
+        
+        <label for="due_date">Filtrer par date d'échéance :</label>
+        <input type="date" name="due_date" id="due_date">
+
+        <button type="submit">Filtrer</button>
+    </form>
+
+    <table>
+        <tr>
+            <th>Titre</th>
+            <th>Description</th>
+            <th>Image</th>
+            <th>Terminé</th>
+            <th>Date d'échéance</th>
+            <th>Tags</th>
+        </tr>
+        {% for project in projects %}
+        <tr>
+            <td>{{ project.title }}</td>
+            <td>{{ project.description }}</td>
+            <td>
+                {% if project.image %}
+                    <img src="{{ project.image.url }}" alt="Image de {{ project.title }}" width="100">
+                {% else %}
+                    Aucune image
+                {% endif %}
+            </td>
+            <td>{{ project.completed }}</td>
+            <td>{{ project.due_date }}</td>
+            <td>
+                {% if project.tags.all %}
+                    <ul>
+                        {% for tag in project.tags.all %}
+                            <li>{{ tag.title }}</li>  <!-- Affichage du titre de chaque tag -->
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    Aucun tag
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    
+    <button type="button" onclick="window.location.href='{% url 'create_project' %}'">Créer un projet</button>
+    <button type="button" onclick="window.location.href='{% url 'main_page' %}'">Retour</button>
+
+</body>
+</html>
