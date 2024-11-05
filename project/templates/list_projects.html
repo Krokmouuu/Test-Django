@@ -3,6 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <title>Liste des Projets</title>
+    <style>
+        /* Quelques styles de base pour rendre le tableau plus lisible */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        ul {
+            padding-left: 20px;
+        }
+    </style>
 </head>
 <body>
     <h1>Liste des Projets</h1>
@@ -22,44 +41,48 @@
     </form>
 
     <table>
-        <tr>
-            <th>Titre</th>
-            <th>Description</th>
-            <th>Image</th>
-            <th>Terminé</th>
-            <th>Date d'échéance</th>
-            <th>Tags</th>
-        </tr>
-        {% for project in projects %}
-        <tr>
-            <td>{{ project.title }}</td>
-            <td>{{ project.description }}</td>
-            <td>
-                {% if project.image %}
-                    <img src="{{ project.image.url }}" alt="Image de {{ project.title }}" width="100">
-                {% else %}
-                    Aucune image
-                {% endif %}
-            </td>
-            <td>{{ project.completed }}</td>
-            <td>{{ project.due_date }}</td>
-            <td>
-                {% if project.tags.all %}
-                    <ul>
-                        {% for tag in project.tags.all %}
-                            <li>{{ tag.title }}</li>  <!-- Affichage du titre de chaque tag -->
-                        {% endfor %}
-                    </ul>
-                {% else %}
-                    Aucun tag
-                {% endif %}
-            </td>
-        </tr>
-        {% endfor %}
+        <thead>
+            <tr>
+                <th>Titre</th>
+                <th>Description</th>
+                <th>Image</th>
+                <th>Terminé</th>
+                <th>Date d'échéance</th>
+                <th>Tags</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for project in projects %}
+            <tr>
+                <td>{{ project.title }}</td>
+                <td>{{ project.description }}</td>
+                <td>
+                    {% if project.image %}
+                        <img src="{{ project.image.url }}" alt="Image de {{ project.title }}" width="100">
+                    {% else %}
+                        Aucune image
+                    {% endif %}
+                </td>
+                <td>{{ project.completed|yesno:"Oui,Non" }}</td>
+                <td>{{ project.due_date|date:"d/m/Y" }}</td>
+                <td>
+                    {% if project.tag_set.all %} 
+                            {% for tag in project.tag_set.all %}
+                                <li>{{ tag.title }}</li>  <!-- Affichage du titre de chaque tag -->
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        Aucun tag
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
     
-    <button type="button" onclick="window.location.href='{% url 'create_project' %}'">Créer un projet</button>
-    <button type="button" onclick="window.location.href='{% url 'main_page' %}'">Retour</button>
-
+    <div style="margin-top: 20px;">
+        <button type="button" onclick="window.location.href='{% url 'create_project' %}'">Créer un projet</button>
+        <button type="button" onclick="window.location.href='{% url 'main_page' %}'">Retour</button>
+    </div>
 </body>
 </html>

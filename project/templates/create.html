@@ -24,6 +24,9 @@
         <label for="due_date">Date d'échéance:</label><br>
         <input type="date" id="due_date" name="due_date"><br><br>
 
+        <label for="tags">Tags (séparés par des virgules):</label><br>
+        <input type="text" id="tags" name="tags" placeholder="Ex: tag1, tag2, tag3"><br><br>
+
         <input type="submit" value="Créer le Projet">
         <button type="button" onclick="window.location.href='{% url 'main_page' %}'">Retour</button>
     </form>

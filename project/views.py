@@ -36,19 +36,22 @@ def get(request: HttpRequest, project_id: int):
     return HttpResponse('get')
 
 def get_all(request: HttpRequest):
-    if request.method == 'GET':
-        projects = Project.objects.all()
+   if request.method == 'GET':
+        projects = Project.objects.prefetch_related('tag_set')  # Préchargez les tags pour réduire le nombre de requêtes
         completed_filter = request.GET.get('completed')
-    if completed_filter:
-        if completed_filter == 'True':
-            projects = projects.filter(completed=True)
-        elif completed_filter == 'False':
-            projects = projects.filter(completed=False)
-    due_date_filter = request.GET.get('due_date') 
-    if due_date_filter:
-        projects = projects.filter(due_date=due_date_filter)
-        projects = sorted(projects, key=lambda p: p.due_date or '', reverse=False)
-    return render(request, 'list_projects.html', {'projects': projects})
+        
+        if completed_filter:
+            if completed_filter == 'True':
+                projects = projects.filter(completed=True)
+            elif completed_filter == 'False':
+                projects = projects.filter(completed=False)
+
+        due_date_filter = request.GET.get('due_date') 
+        if due_date_filter:
+            projects = projects.filter(due_date=due_date_filter)
+            projects = sorted(projects, key=lambda p: p.due_date or '', reverse=False)
+
+        return render(request, 'list_projects.html', {'projects': projects})
 
 def delete(request: HttpRequest, project_id: int):
     return HttpResponse('delete')
