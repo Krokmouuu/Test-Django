@@ -6,7 +6,6 @@ Ce projet permet de gérer des projets avec des informations telles que le titre
 
 - Python 3.12 ou plus récent
 - Django 5.1 ou plus récent
-- Redis .........
 
 ## Installation
 
@@ -21,7 +20,6 @@ Ce projet permet de gérer des projets avec des informations telles que le titre
 ```bash 
 py manage.py runserver
 celery -A djangotest worker -l info
-redis .....
 ```
 Aller a http://127.0.0.1:8000/
 
