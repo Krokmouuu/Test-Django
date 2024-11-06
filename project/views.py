@@ -3,6 +3,7 @@ from django.http import HttpRequest, HttpResponse
 from .models import Project, Tag
 from .serializers import ProjectSerializer
 from rest_framework.decorators import api_view
+from django.core.files.storage import default_storage
 
 def handle_error(message, status_code=400): # 400 is the default status code
     return HttpResponse(message, status=status_code)
@@ -92,6 +93,9 @@ def delete(request: HttpRequest, project_id: int):
         return render(request, 'delete_project.html', {'project': project})
 
     elif request.method == 'POST':
+        if project.image:
+            if default_storage.exists(project.image.name):
+                default_storage.delete(project.image.name)
         project.delete()
         return redirect('retrieve_all_project')
 
