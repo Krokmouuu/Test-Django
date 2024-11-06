@@ -11,6 +11,10 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -18,20 +22,21 @@ MEDIA_URL = '' # Empty route, route are already defined in models.py
 MEDIA_ROOT = ''  
 
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # Console email backend
-DEFAULT_FROM_EMAIL = ''  # Default email sender
+EMAIL_BACKEND = os.getenv('EMAIL_BACKEND')  # Console email backend
+DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')  # Default email sender
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-dyagln+^ac$rqkxt64+u5p#__jm^naqrb$#5m-z(%8w#&lob*3'
+
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG')
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS: list[str] = os.getenv('ALLOWED_HOSTS').split(',') # Never let this empty in production or with *
 
 
 # Application definition
@@ -82,8 +87,8 @@ WSGI_APPLICATION = 'djangotest.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': os.getenv('DB_ENGINE'),
+        'NAME': BASE_DIR / os.getenv('DB_NAME'),
     }
 }
 
