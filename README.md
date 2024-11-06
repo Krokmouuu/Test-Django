@@ -61,8 +61,6 @@ Vous pouvez créer et modifier des projets.
 
 Pour accéder au panneau administrateur : http://127.0.0.1:8000/admin/
 
-Nom d'utilisateur et mot de passe : admin
-
 Crée un superuser
 ```bash
 python manage.py createsuperuser
