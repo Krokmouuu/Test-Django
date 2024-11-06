@@ -2,7 +2,7 @@ from django.db import models
 from typing import Optional
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-# from .tasks import mail_function
+from .tasks import mail_function
 
 class Project(models.Model):
     """ Model for Projects, Title limited to 255 characters, description, image and due date are optional, completed is a boolean field """
@@ -23,7 +23,7 @@ class Tag(models.Model):
     def __str__(self) -> str:
         return self.title
 
-# @receiver(post_save, sender=Project) # Signal sent after a project is created
-# def signal_mail(sender, instance, created, **kwargs):
-#     if created:
-#         mail_function.delay(instance.id) # Send email with Celery
+@receiver(post_save, sender=Project) # Signal sent after a project is created
+def signal_mail(sender, instance, created, **kwargs):
+    if created:
+        mail_function.delay(instance.id) # Send email with Celery

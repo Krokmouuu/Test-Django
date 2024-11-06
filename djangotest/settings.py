@@ -25,6 +25,10 @@ MEDIA_ROOT = ''
 EMAIL_BACKEND = os.getenv('EMAIL_BACKEND')  # Console email backend
 DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')  # Default email sender
 
+EMAIL_HOST = os.getenv('EMAIL_HOST')
+EMAIL_PORT = os.getenv('EMAIL_PORT')
+EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS')
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
@@ -111,6 +115,17 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# REST_FRAMEWORK = { # Django REST framework default settings but useless for now
+#     'DEFAULT_THROTTLE_CLASSES': [
+#         'rest_framework.throttling.UserRateThrottle',  # Limit requests per authenticated user
+#         'rest_framework.throttling.AnonRateThrottle',  # Limit requests per anonymous user
+#     ],
+#     'DEFAULT_THROTTLE_RATES': {
+#         'user': '20/min',  # 20 request per minute per authenticated user
+#         'anon': '10/min',  # 10 request per minute per anonymous user
+#     }
+# }
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
@@ -132,4 +147,4 @@ STATIC_URL = 'static/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+DEFAULT_AUTO_FIELD = os.getenv('DEFAULT_AUTO_FIELD')

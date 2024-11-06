@@ -9,3 +9,10 @@ app = Celery('djangotest')
 app.config_from_object('django.conf:settings', namespace='CELERY')
 
 app.autodiscover_tasks()
+
+# Needed for development
+app.conf.update(
+    task_always_eager=True,   # Execute the task locally
+    task_eager_propagates=True,  # progate exceptions
+    broker_url='memory://'  # Use an in-memory broker to execute tasks locally
+)
