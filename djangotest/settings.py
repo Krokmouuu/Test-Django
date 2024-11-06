@@ -18,6 +18,10 @@ MEDIA_URL = '' # Empty route, route are already defined in models.py
 MEDIA_ROOT = ''  
 
 
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # Console email backend
+DEFAULT_FROM_EMAIL = ''  # Default email sender
+
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 

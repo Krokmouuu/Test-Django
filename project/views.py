@@ -32,7 +32,6 @@ def create(request: HttpRequest):
         return render(request, 'create_project.html')
     return handle_error('Méthode non autorisée', 405)
         
-
 def update(request: HttpRequest, project_id: int):
     project = get_object_or_404(Project, id=project_id) # Get project by ID
 
@@ -88,15 +87,16 @@ def get_all(request: HttpRequest):
 
 def delete(request: HttpRequest, project_id: int):
     project = get_object_or_404(Project, id=project_id)
-
+    if project is None:
+        return handle_error('Projet introuvable', 404)
     if request.method == 'GET':
         return render(request, 'delete_project.html', {'project': project})
-
     elif request.method == 'POST':
         if project.image:
             if default_storage.exists(project.image.name):
                 default_storage.delete(project.image.name)
         project.delete()
+        Tag.objects.filter(projects__isnull=True).delete() # Delete tags with no projects
         return redirect('retrieve_all_project')
 
     return handle_error('Méthode non autorisée', 405)
