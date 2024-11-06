@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Détails du Projet</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .project-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .project-image img {
+            max-width: 100%;
+            border-radius: 8px;
+        }
+        .project-detail {
+            margin-top: 20px;
+        }
+        .project-detail h2 {
+            margin-top: 0;
+        }
+        .project-detail p {
+            line-height: 1.6;
+        }
+        .project-tags {
+            margin-top: 20px;
+        }
+        .project-tags ul {
+            padding-left: 20px;
+        }
+        .project-tags li {
+            list-style-type: disc;
+            margin-left: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="project-container">
+    <div class="project-image">
+        {% if project.image %}
+            <img src="{{ project.image.url }}" alt="Image du projet">
+        {% else %}
+            <p>Aucune image disponible pour ce projet.</p>
+        {% endif %}
+    </div>
+
+    <div class="project-detail">
+        <h2>{{ project.title }}</h2>
+        <p><strong>Description :</strong> {{ project.description }}</p>
+        <p><strong>Échéance :</strong> {{ project.due_date|date:"d/m/Y" }}</p>
+        <p><strong>Statut :</strong> {% if project.completed %}Complété{% else %}En cours{% endif %}</p>
+    </div>
+
+    <div class="project-tags">
+        <h3>Tags associés :</h3>
+        {% if project.tag_set.all %}
+            <ul>
+                {% for tag in project.tag_set.all %}
+                    <li>{{ tag.title }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Aucun tag associé à ce projet.</p>
+        {% endif %}
+    </div>
+</div>
+
+</body>
+</html>
