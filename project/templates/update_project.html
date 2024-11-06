@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <title>Modifier le Projet</title>
     <style>
-        /* Quelques styles pour rendre le formulaire plus lisible */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -84,12 +83,19 @@
         <label for="due_date">Date d'échéance :</label>
         <input type="date" id="due_date" name="due_date" value="{{ project.due_date|date:'Y-m-d' }}">
 
-        <label for="tags">Tags :</label>
-        <select name="tags" id="tags" multiple>
-            {% for tag in all_tags %}
-                <option value="{{ tag.id }}" {% if tag in project.tags.all %}selected{% endif %}>{{ tag.title }}</option>
-            {% endfor %}
-        </select>
+        <div class="project-tags">
+            <h3>Tags associés :</h3>
+            {% if project.tag_set.all %}
+                <ul>
+                    {% for tag in project.tag_set.all %}
+                        <li>{{ tag.title }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>Aucun tag associé à ce projet.</p>
+            {% endif %}
+        </div>
+    </div>
 
         <button type="submit">Mettre à jour le projet</button>
         <button type="button" onclick="window.location.href='{% url 'retrieve_all_project' %}'">Annuler</button>

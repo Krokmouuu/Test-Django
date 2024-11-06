@@ -6,7 +6,7 @@ from . import views
 urlpatterns = [
     path('', views.main_page, name='main_page'),
 
-    path('create/', views.create, name='create_project'),
+    path('create/', views.create, name='create_project'), 
     # path('create/success/', views.success, name='success'), # Not needed
 
     path('update/<int:project_id>', views.update, name='update_project'),
@@ -15,4 +15,4 @@ urlpatterns = [
     path('project/', views.get_all, name='retrieve_all_project'),
 
     path('delete/<int:project_id>/', views.delete, name='delete_project'), # I made a URL to respect instructions
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) 

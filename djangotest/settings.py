@@ -14,7 +14,7 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-MEDIA_URL = ''  
+MEDIA_URL = '' # Empty route, route are already defined in models.py
 MEDIA_ROOT = ''  
 
 
