@@ -1,8 +1,8 @@
+from rest_framework.decorators import api_view
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpRequest, HttpResponse
 from .models import Project, Tag
 from .serializers import ProjectSerializer
-from rest_framework.decorators import api_view
 from django.core.files.storage import default_storage
 from djangotest.throttling import CreateThrottle
 
@@ -85,8 +85,8 @@ def get_all(request: HttpRequest):
         due_date_filter = request.GET.get('due_date') 
         if due_date_filter:
             projects = projects.filter(due_date=due_date_filter)
-            projects = sorted(projects, key=lambda p: p.due_date or '', reverse=False) # Sort by due date
-        return render(request, 'list_projects.html', {'projects': projects})
+            sorted_projects = sorted(projects, key=lambda p: p.due_date or '', reverse=False) # Sort by due date
+        return render(request, 'list_projects.html', {'projects': sorted_projects})
    else:
         return handle_error('Méthode non autorisée', 405)
 

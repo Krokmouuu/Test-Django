@@ -40,7 +40,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG')
 
-ALLOWED_HOSTS: list[str] = os.getenv('ALLOWED_HOSTS').split(',') # Never let this empty in production or with *
+ALLOWED_HOSTS: list[str] = os.getenv('ALLOWED_HOSTS', '').split(',') # Never let this empty in production or with *
 
 
 # Application definition
@@ -88,14 +88,16 @@ WSGI_APPLICATION = 'djangotest.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': os.getenv('DB_ENGINE'),
-        'NAME': BASE_DIR / os.getenv('DB_NAME'),
+db_name = os.getenv('DB_NAME')
+if db_name is not None:
+    DATABASES = {
+        'default': {
+            'ENGINE': os.getenv('DB_ENGINE'),
+            'NAME': BASE_DIR / db_name,
+        }
     }
-}
-
+else:
+    raise ValueError("DB_NAME is not set in the environment variables")
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
