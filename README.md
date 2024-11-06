@@ -41,7 +41,6 @@ source venv/bin/activate
 Puis, installez toutes les dépendances :
 
 ```bash
-python -m ensurepip --upgrade
 pip install -r requirements.txt
 ```
 ## Lancement
@@ -62,6 +61,13 @@ Vous pouvez créer et modifier des projets.
 
 Pour accéder au panneau administrateur : http://127.0.0.1:8000/admin/
 
+Nom d'utilisateur et mot de passe : admin
+
+Crée un superuser
+```bash
+python manage.py createsuperuser
+```
+
 ## Commandes
 Pour effectuer des tests :
 
@@ -73,4 +79,9 @@ Pour appliquer les migrations :
 ```bash
 py manage.py makemigrations
 py manage.py migrate
+```
+
+Supprimer tous les projects
+```bash
+py manage.py delete_all_projects
 ```
