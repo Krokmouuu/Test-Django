@@ -20,7 +20,7 @@ Ce projet permet de gérer des projets avec des informations telles que le titre
 
 ```bash 
 py manage.py runserver
-celery -A nom-du_-rojet worker -l info
+celery -A djangotest worker -l info
 redis .....
 ```
 Aller a http://127.0.0.1:8000/
