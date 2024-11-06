@@ -46,7 +46,7 @@ pip install -r requirements.txt
 ## Lancement
 Le programme nécessite deux terminaux.
 
-Dans le premier terminal, lancez le serveur Django :
+Dans le premier terminal, appliquez les migrations, puis, lancez le serveur Django :
 ```bash
 py manage.py runserver
 ```
