@@ -41,7 +41,6 @@ source venv/bin/activate
 Puis, installez toutes les dépendances :
 
 ```bash
-python -m ensurepip --upgrade
 pip install -r requirements.txt
 ```
 ## Lancement
