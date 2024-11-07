@@ -14,14 +14,15 @@ def handle_error(message, status_code=400): # 400 is the default status code
 def main_page(request: HttpRequest): # Main page view
     return render(request, 'main_page.html')
 def create(request: HttpRequest):
-
     throttle = CreateThrottle() # Create an instance of the throttle class
     if not throttle.allow_request(request, None): # Check if the request is allowed
         return handle_error('Trop de requêtes. Veuillez réessayer plus tard.', 429) # Return an error if the request is not allowed
     if request.method == 'POST':
-        data = request.POST.copy() 
+        data = request.POST.copy()
         data['image'] = request.FILES.get('image') # Get image from request
-
+        data['title'] = data['title'].strip()
+        if not data['title']: # Check if title is empty
+            return handle_error('Le titre ne peut pas être vide', 400)
         serializer = ProjectSerializer(data=data)
         if serializer.is_valid():
             project = serializer.save()
