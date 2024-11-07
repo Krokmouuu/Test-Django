@@ -11,8 +11,6 @@ def mail_function(project_id: int):
         message = f"Votre projet '{project.title}' a été créé avec succès."
         email_sender = settings.DEFAULT_FROM_EMAIL
 
-        print(f"Email Sender: {email_sender}")
-
         if email_sender:
             send_mail(sujet, message, email_sender, [email_sender])
             return f"Email envoyé à {email_sender}."

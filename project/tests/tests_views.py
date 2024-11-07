@@ -28,7 +28,7 @@ class ProjectViewsTest(TestCase):
         response = self.client.get(self.main_page) # Simulate a GET request to the URL
         self.assertEqual(response.status_code, 200) # Check if the response is successful
         self.assertTemplateUsed(response, 'main_page.html') # Check if the correct template is used
-        
+
     def test_project_list_view(self):
         """Tester que la vue liste des projets fonctionne et affiche les projets."""
         response = self.client.get(self.list_url) # Simulate a GET request to the URL
@@ -75,4 +75,37 @@ class ProjectViewsTest(TestCase):
         self.assertEqual(response.status_code, 302)  # Redirect after delete
         self.assertEqual(Project.objects.count(), 0)  # Check if the project was deleted from the database
 
+class ProjectFilterViewTest(TestCase):
+    def setUp(self):
+        """Préparer les données et le client de test."""
+        self.client = Client()
+        self.project_data1 = {
+            'title': 'Project 1',
+            'description': 'Test project 1',
+            'completed': False,
+            'due_date': timezone.now().date() + timedelta(days=7)
+        }
+        self.project_data2 = {
+            'title': 'Project 2',
+            'description': 'Test project 2',
+            'completed': True,
+            'due_date': timezone.now().date() + timedelta(days=10)
+        }
+        self.project1 = Project.objects.create(**self.project_data1)
+        self.project2 = Project.objects.create(**self.project_data2)
+        
+        self.list_url = reverse('retrieve_all_project')
+    
+    def test_project_list_filter_by_completed(self):
+        """Test du filtrage des projets par statut 'complété'."""
+        response = self.client.get(self.list_url, {'completed': True})
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Project 2')
+        self.assertNotContains(response, 'Project 1')
 
+    def test_project_list_filter_by_date(self):
+        """Test du filtrage des projets par date."""
+        response = self.client.get(self.list_url, {'due_date': str(self.project1.due_date)})
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Project 1')
+        self.assertNotContains(response, 'Project 2')
