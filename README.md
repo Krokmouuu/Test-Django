@@ -46,7 +46,7 @@ pip install -r requirements.txt
 ## Lancement
 Le programme nécessite deux terminaux.
 
-Dans le premier terminal, lancez le serveur Django :
+Dans le premier terminal, appliquez les migrations, puis, lancez le serveur Django :
 ```bash
 py manage.py runserver
 ```
@@ -61,8 +61,6 @@ Vous pouvez créer et modifier des projets.
 
 Pour accéder au panneau administrateur : http://127.0.0.1:8000/admin/
 
-Nom d'utilisateur et mot de passe : admin
-
 Crée un superuser
 ```bash
 python manage.py createsuperuser
@@ -72,7 +70,7 @@ python manage.py createsuperuser
 Pour effectuer des tests :
 
 ```bash
-py manage.py test
+python manage.py test project.tests
 ```
 Pour appliquer les migrations :
 
