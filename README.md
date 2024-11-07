@@ -48,7 +48,7 @@ Le programme nécessite deux terminaux.
 
 Dans le premier terminal, appliquez les migrations, puis, lancez le serveur Django :
 ```bash
-py manage.py runserver
+python manage.py runserver
 ```
 Dans le deuxième terminal, lancez le worker Celery :
 
