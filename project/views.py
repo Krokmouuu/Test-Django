@@ -4,7 +4,8 @@ from django.http import HttpRequest, HttpResponse
 from .models import Project, Tag
 from .serializers import ProjectSerializer
 from django.core.files.storage import default_storage
-from djangotest.throttling import CreateThrottle
+from djangotest.throttle import CreateThrottle
+
 
 def handle_error(message, status_code=400): # 400 is the default status code
     return HttpResponse(message, status=status_code)

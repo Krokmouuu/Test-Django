@@ -1,6 +1,7 @@
 from django.test import TestCase, Client
 from ..models import Project, Tag
 from django.utils import timezone
+from django.urls import reverse
 
 class ProjectModelTest(TestCase):
     
@@ -15,12 +16,15 @@ class ProjectModelTest(TestCase):
         
     def test_create_project(self):
         """Tester la création d'un projet."""
-        project = Project.objects.create(**self.project_data)
+        url = reverse('create_project')
+        response = self.client.post(url, self.project_data)
         self.assertEqual(Project.objects.count(), 1)
-        self.assertEqual(project.title, 'Test Project')
-        self.assertEqual(project.description, 'A description for the test project')
-        self.assertFalse(project.completed)
-        self.assertEqual(project.due_date, self.project_data['due_date'])
+        self.assertTemplateUsed(response, 'success.html')
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, '<button onclick="window.location.href=\'/create/\'">Créer un autre projet</button>')
+        self.assertContains(response, '<button onclick="window.location.href=\'/\'">Retour à l\'accueil</button>')
+        self.assertTrue(Project.objects.filter(title='Test Project').exists())
+
 
     def test_read_project(self):
         """Tester la lecture d'un projet."""
@@ -36,20 +40,24 @@ class ProjectModelTest(TestCase):
             'completed': True,
             'due_date': timezone.now().date() + timezone.timedelta(days=5)
         }
-        project.title = updated_data['title']
-        project.completed = updated_data['completed']
-        project.due_date = updated_data['due_date']
-        project.save()
+        response = self.client.post(reverse('update_project', args=[project.id]), updated_data)
+        self.assertEqual(response.status_code, 302)
         updated_project = Project.objects.get(id=project.id)
-        self.assertEqual(updated_project.title, 'Updated Project Title')
+        self.assertEqual(updated_project.title, updated_data['title'])
         self.assertTrue(updated_project.completed)
         self.assertEqual(updated_project.due_date, updated_data['due_date'])
 
     def test_delete_project(self):
+    
         """Tester la suppression d'un projet."""
         project = Project.objects.create(**self.project_data)
         project_id = project.id
-        project.delete()
+        response = self.client.get(reverse('delete_project', args=[project.id]))
+        self.assertContains(response, '<button type="submit">Confirmer la suppression</button>')
+        self.assertContains(response, '<a href="/project/">Annuler</a>')
+        self.assertEqual(response.status_code, 200)
+        response = self.client.post(reverse('delete_project', args=[project.id]))
+        self.assertEqual(response.status_code, 302)
         with self.assertRaises(Project.DoesNotExist):
             Project.objects.get(id=project_id)
 

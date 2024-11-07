@@ -86,8 +86,7 @@
                 <td class="actions">
                     <a href="{% url 'retrieve_project' project.id %}">Voir</a>
                     <a href="{% url 'update_project' project.id %}">Éditer</a>
-                    <a href="{% url 'delete_project' project.id %}" class="delete-btn" 
-                       onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce projet ?');">Supprimer</a>
+                    <a href="{% url 'delete_project' project.id %}">Supprimer</a>
                 </td>
             </tr>
             {% endfor %}

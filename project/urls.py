@@ -15,4 +15,6 @@ urlpatterns = [
     path('project/', views.get_all, name='retrieve_all_project'),
 
     path('delete/<int:project_id>/', views.delete, name='delete_project'), # I made a URL to respect instructions
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) 
+] 
+if not settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) 

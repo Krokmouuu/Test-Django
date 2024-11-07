@@ -13,13 +13,13 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 import os
 from dotenv import load_dotenv
-
+import sys
 load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 MEDIA_URL = '' # Empty route, route are already defined in models.py
-MEDIA_ROOT = ''  
+MEDIA_ROOT = '' # Media root for images
 
 
 EMAIL_BACKEND = os.getenv('EMAIL_BACKEND')  # Console email backend
@@ -29,6 +29,8 @@ EMAIL_HOST = os.getenv('EMAIL_HOST')
 EMAIL_PORT = os.getenv('EMAIL_PORT')
 EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS')
 
+if 'test' in sys.argv:
+    DISABLE_THROTTLING = True
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/

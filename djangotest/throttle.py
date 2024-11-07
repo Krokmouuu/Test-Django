@@ -1,10 +1,13 @@
 from datetime import datetime, timedelta
 from django.core.cache import cache
 from rest_framework.throttling import BaseThrottle
+from django.conf import settings
 
 class CreateThrottle(BaseThrottle):
 
     def allow_request(self, request, view):
+        if getattr(settings, 'DISABLE_THROTTLING', False): # Check if throttling is disabled
+            return True  # Allow the request if throttling is disabled
         ip = request.META.get('REMOTE_ADDR')  # Use the IP address of the user as the key
         cache_key = f"throttle_{ip}_create_project"
 
