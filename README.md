@@ -70,7 +70,7 @@ python manage.py createsuperuser
 Pour effectuer des tests :
 
 ```bash
-py manage.py test
+python manage.py test project.tests
 ```
 Pour appliquer les migrations :
 
