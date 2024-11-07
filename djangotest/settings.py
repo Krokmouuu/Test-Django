@@ -38,7 +38,7 @@ EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS')
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DEBUG')
+DEBUG = os.getenv('DEBUG', 'False') == 'True' # Convert the string to a boolean
 
 ALLOWED_HOSTS: list[str] = os.getenv('ALLOWED_HOSTS', '').split(',') # Never let this empty in production or with *
 

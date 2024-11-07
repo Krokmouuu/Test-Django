@@ -1,5 +1,5 @@
-from django.test import TestCase
-from .models import Project, Tag
+from django.test import TestCase, Client
+from ..models import Project, Tag
 from django.utils import timezone
 
 class ProjectModelTest(TestCase):
@@ -10,7 +10,7 @@ class ProjectModelTest(TestCase):
             'title': 'Test Project',
             'description': 'A description for the test project',
             'completed': False,
-            'due_date': timezone.now().date()  # ou une date spécifique
+            'due_date': timezone.now().date() + timezone.timedelta(days=7)
         }
         
     def test_create_project(self):
